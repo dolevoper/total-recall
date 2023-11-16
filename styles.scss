@@ -79,15 +79,19 @@ html, body, main, .review-zone {
         display: grid;
         align-items: center;
         justify-items: center;
-        
-        background: lightseagreen;
+
         border-radius: 8px;
         
         backface-visibility: hidden;
         transition: transform 1s ease-in-out;
     }
-
+    
+    &__front {
+        background: deeppink;
+    }
+    
     &__back {
+        background: lightseagreen;
         transform: rotateY(180deg);
     }
 
