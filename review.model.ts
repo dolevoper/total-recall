@@ -1,6 +1,6 @@
 type Feedback = 0 | 1 | 2 | 3 | 4 | 5;
 
-type Card = {
+export type Card = {
     front: string,
     back: string
     lastFeedback?: Feedback;
@@ -29,6 +29,7 @@ const cards: Card[] = [
     }
 ];
 
+const callbacks = [] as Function[];
 let currentCardIndex = 0;
 
 export function getCurrentCard() {
@@ -36,7 +37,7 @@ export function getCurrentCard() {
 }
 
 export function isDone() {
-    return currentCardIndex === cards.length - 1;
+    return currentCardIndex === cards.length;
 }
 
 export function nextCard() {
@@ -45,6 +46,12 @@ export function nextCard() {
     }
 
     currentCardIndex++;
+
+    setTimeout(function () {
+        callbacks.forEach(function (callback) {
+            callback();
+        });
+    });
 }
 
 export function giveFeedback(feedback: Feedback) {
@@ -59,4 +66,8 @@ export function parseFeedback(feedback: unknown): Feedback {
     }
 
     return asNumber as Feedback;
+}
+
+export function onUpdate(callback: Function) {
+    callbacks.push(callback);
 }

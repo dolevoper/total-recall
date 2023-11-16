@@ -17,18 +17,33 @@
                 <p class="card__back"></p>
             </article>
             <button id="btnFlip">Flip</button>
-            <form id="feedbackForm" class="review-zone__feedback">
-                <button name="feedback" value="0" class="review-zone__feedback__button">Total blackout</button>
-                <button name="feedback" value="1" class="review-zone__feedback__button">Answer looked familiar</button>
-                <button name="feedback" value="2" class="review-zone__feedback__button">Answer looked obvious</button>
-                <button name="feedback" value="3" class="review-zone__feedback__button">Hard</button>
-                <button name="feedback" value="4" class="review-zone__feedback__button">Hesitated</button>
-                <button name="feedback" value="5" class="review-zone__feedback__button">Perfect recall</button>
+            <form name="feedback" class="review-zone__feedback invisible">
+                <button value="0" class="review-zone__feedback__button">Total blackout</button>
+                <button value="1" class="review-zone__feedback__button">Answer looked familiar</button>
+                <button value="2" class="review-zone__feedback__button">Answer looked obvious</button>
+                <button value="3" class="review-zone__feedback__button">Hard</button>
+                <button value="4" class="review-zone__feedback__button">Hesitated</button>
+                <button value="5" class="review-zone__feedback__button">Perfect recall</button>
             </form>
         </article>
     </main>
 
-    <script type="module" src="dist/app.js"></script>
+    <script type="module">
+        import { init, onCardFlip, onSubmitFeedback } from "./dist/review.controller.js";
+
+        const reviewForm = document.forms.namedItem("feedback");
+
+        init(reviewZone, currentCard, reviewForm);
+
+        btnFlip.addEventListener("click", function () {
+            onCardFlip(currentCard, reviewForm);
+        });
+
+        reviewForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            onSubmitFeedback(e.submitter.value);
+        });
+    </script>
 </body>
 
 </html>

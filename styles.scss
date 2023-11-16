@@ -46,17 +46,12 @@ html, body, main, .review-zone {
 
     &__feedback {
         display: grid;
-        visibility: hidden;
 
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
         &__button {
             aspect-ratio: 1;
         }
-    }
-
-    &--reviewed &__feedback {
-        visibility: visible;
     }
 }
 
@@ -102,4 +97,8 @@ html, body, main, .review-zone {
     &--flipped &__front {
         transform: rotateY(180deg);
     }
+}
+
+.invisible {
+    visibility: hidden;
 }
