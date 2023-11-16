@@ -1,0 +1,58 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
+html {
+    font-size: calc(1rem + 0.5vw);
+    line-height: 1.6;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    width: min(100% - 2rem, 70ch);
+    margin-inline: auto;
+}
+
+.review-zone {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.card {
+    background: lightseagreen;
+    color: white;
+    font-weight: 600;
+    font-size: 2rem;
+    border-radius: 8px;
+    aspect-ratio: 3 / 4;
+
+    display: grid;
+    align-items: center;
+    justify-items: center;
+
+    &__back {
+        display: none;
+    }
+
+    &--flipped &__back {
+        display: block;
+    }
+
+    &--flipped &__front {
+        display: none;
+    }
+}

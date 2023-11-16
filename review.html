@@ -5,10 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Total Recall</title>
+    <link rel="stylesheet" href="dist/styles.css" />
 </head>
 
 <body>
-    <h1>Total Recall</h1>
+    <main>
+        <h1>Total Recall</h1>
+        <article id="reviewZone" class="review-zone">
+            <article id="currentCard" class="card">
+                <p class="card__front"></p>
+                <p class="card__back"></p>
+            </article>
+            <button id="btnFlip">Flip</button>
+            <button id="btnNextCard">Next card</button>
+        </article>
+    </main>
 
     <script src="dist/app.js"></script>
 </body>
