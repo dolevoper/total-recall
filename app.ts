@@ -4,40 +4,15 @@
 // [x] let the user flip
 // [x] let the user continue to next card
 // [x] when all cards reviewed show done message
+// [x] next card always show front first
+// [ ] feedback after card was flipped
 
-type Card = {
-    front: string,
-    back: string
-};
-
-const cards: Card[] = [
-    {
-        front: "Hello",
-        back: "שלום"
-    },
-    {
-        front: "World",
-        back: "עולם"
-    },
-    {
-        front: "Card",
-        back: "קלף"
-    },
-    {
-        front: "Repetition",
-        back: "חזרה"
-    },
-    {
-        front: "Software",
-        back: "תוכנה"
-    }
-];
-
-let currentCardIndex = 0;
+import { getCurrentCard, isDone, nextCard } from "./review.model.js";
 
 function displayCurrentCard() {
-    const currentCard = cards[currentCardIndex];
+    const currentCard = getCurrentCard();
 
+    document.querySelector("#currentCard")?.classList.remove("card--flipped");
     document.querySelector("#currentCard .card__front")!.textContent = currentCard.front;
     document.querySelector("#currentCard .card__back")!.textContent = currentCard.back;
 }
@@ -47,12 +22,12 @@ document.querySelector("#btnFlip")?.addEventListener("click", function () {
 });
 
 document.querySelector("#btnNextCard")?.addEventListener("click", function () {
-    if (currentCardIndex === cards.length - 1) {
+    if (isDone()) {
         document.querySelector("#reviewZone")!.innerHTML = "<h2>All done!</h2>";
         return;
     }
 
-    currentCardIndex++;
+    nextCard();
     displayCurrentCard();
 });
 
