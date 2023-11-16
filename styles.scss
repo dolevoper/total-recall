@@ -17,6 +17,11 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+button {
+    font-size: inherit;
+    font-family: inherit;
+}
+
 main {
     display: flex;
     flex-direction: column;
@@ -30,6 +35,17 @@ main {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    &__feedback {
+        display: none;
+
+        grid-auto-flow: column;
+        grid-auto-columns: 1fr;
+    }
+
+    &--reviewed &__feedback {
+        display: grid;
+    }
 }
 
 .card {

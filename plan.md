@@ -6,6 +6,7 @@ screens:
   - input difficulty level
   - move to next card
   - when review is done go back to deck selection
+  - Spaced repetition algorithm: SuperMemo2 (SM2)
 - select deck (first screen)
   - mark decks that need review today
   - allow to delete decks

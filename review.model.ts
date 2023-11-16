@@ -1,6 +1,9 @@
+type Feedback = 0 | 1 | 2 | 3 | 4 | 5;
+
 type Card = {
     front: string,
     back: string
+    lastFeedback?: Feedback;
 };
 
 const cards: Card[] = [
@@ -42,4 +45,18 @@ export function nextCard() {
     }
 
     currentCardIndex++;
+}
+
+export function giveFeedback(feedback: Feedback) {
+    getCurrentCard().lastFeedback = feedback;
+}
+
+export function parseFeedback(feedback: unknown): Feedback {
+    const asNumber = Number(feedback);
+
+    if (asNumber < 0 || asNumber > 5 || !Number.isInteger(asNumber)) {
+        throw new Error();
+    }
+
+    return asNumber as Feedback;
 }
