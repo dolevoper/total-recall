@@ -1,0 +1,22 @@
+screens:
+
+- review
+  - see front of card
+  - flip card to see back
+  - input difficulty level
+  - move to next card
+  - when review is done go back to deck selection
+- select deck (first screen)
+  - mark decks that need review today
+  - allow to delete decks
+  - allow to start review
+  - allow to edit deck
+  - suspend deck
+  - see deck stats
+- deck edition
+  - add/edit cards
+  - card order
+  - deck options
+    - name
+    - number of new cards per day
+    - ordered/random
