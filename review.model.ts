@@ -1,59 +1,14 @@
-type Feedback = 0 | 1 | 2 | 3 | 4 | 5;
-
-export type Card = {
-    front: string,
-    back: string,
-    repetitions: number,
-    interval: number,
-    ef: number
-};
+import { Card, Feedback, upsertCard } from "./cards.model.js";
 
 const callbacks = [] as Function[];
-const cards: Card[] = [
-    {
-        front: "Hello",
-        back: "שלום",
-        repetitions: 0,
-        interval: 1,
-        ef: 2.5
-    },
-    {
-        front: "World",
-        back: "עולם",
-        repetitions: 0,
-        interval: 1,
-        ef: 2.5
-    },
-    {
-        front: "Card",
-        back: "קלף",
-        repetitions: 0,
-        interval: 1,
-        ef: 2.5
-    },
-    {
-        front: "Repetition",
-        back: "חזרה",
-        repetitions: 0,
-        interval: 1,
-        ef: 2.5
-    },
-    {
-        front: "Software",
-        back: "תוכנה",
-        repetitions: 0,
-        interval: 1,
-        ef: 2.5
-    }
-];
 
-let currentCard: Card | undefined = {
-    front: "Father",
-    back: "אבא",
-    repetitions: 0,
-    interval: 1,
-    ef: 2.5
-};
+let cardsToReview = [] as Card[];
+let currentCard = undefined as Card | undefined;
+
+export function startReview(cards: Card[]) {
+    cardsToReview = cards.slice(1);
+    currentCard = cards[0];
+}
 
 export function getCurrentCard() {
     if (!currentCard) {
@@ -67,16 +22,6 @@ export function isDone() {
     return !currentCard;
 }
 
-export function nextCard() {
-    currentCard = cards.shift();
-
-    setTimeout(function () {
-        callbacks.forEach(function (callback) {
-            callback();
-        });
-    });
-}
-
 export function giveFeedback(feedback: Feedback) {
     const currentCard = getCurrentCard();
 
@@ -84,9 +29,7 @@ export function giveFeedback(feedback: Feedback) {
         currentCard.repetitions = 0;
         currentCard.interval = 1;
 
-        cards.push(currentCard);
-
-        return;
+        cardsToReview.push(currentCard);
     } else {
         if (currentCard.repetitions === 0) {
             currentCard.interval = 1;
@@ -100,6 +43,9 @@ export function giveFeedback(feedback: Feedback) {
     }
 
     currentCard.ef = calculateEf(currentCard.ef, feedback);
+
+    upsertCard(currentCard);
+    nextCard();
 }
 
 export function parseFeedback(feedback: unknown): Feedback {
@@ -118,4 +64,14 @@ export function onUpdate(callback: Function) {
 
 function calculateEf(currentEf: number, feedback: Feedback) {
     return Math.min(1.3, currentEf + (0.1 - (5 - feedback) * (0.08 + (5 - feedback) * 0.02)));
+}
+
+function nextCard() {
+    currentCard = cardsToReview.shift();
+
+    setTimeout(function () {
+        callbacks.forEach(function (callback) {
+            callback();
+        });
+    });
 }

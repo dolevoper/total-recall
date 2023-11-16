@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Total Recall</title>
+    <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/styles.css" />
+    <link rel="stylesheet" href="dist/review.css" />
 </head>
 
 <body>
     <main>
         <h1>Total Recall</h1>
+        <a href="index.html">🏡Home</a>
         <article id="reviewZone" class="review-zone">
             <article id="currentCard" class="card">
                 <p class="card__front"></p>
@@ -28,6 +31,7 @@
         </article>
     </main>
 
+    <script type="module" src="dist/initCards.js"></script>
     <script type="module">
         import { init, onCardFlip, onSubmitFeedback } from "./dist/review.controller.js";
 
