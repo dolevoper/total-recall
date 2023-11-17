@@ -1,6 +1,8 @@
-import { Card } from "./review.model";
+import { getById } from "./cards.model.js";
 
-export function renderCard(cardElement: HTMLElement, card: Card) {
+export function renderCard(cardElement: HTMLElement, cardId: string) {
+    const card = getById(cardId);
+
     cardElement.querySelector(".card__front")!.textContent = card.front;
 
     if (!cardElement.classList.contains("card--flipped")) {

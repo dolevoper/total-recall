@@ -1,13 +1,18 @@
-import { Card, Feedback, review } from "./cards.model.js";
+import { Feedback, review } from "./cards.model.js";
+import { appUUID } from "./consts.js";
+
+const cardsToReviewStorageKey = `${appUUID}_totalrecall_review__cardsToReview`;
+const currentCardStorageKey = `${appUUID}_totalrecall_review__currentCard`;
 
 const callbacks = [] as Function[];
 
-let cardsToReview = [] as Card[];
-let currentCard = undefined as Card | undefined;
+let cardsToReview = JSON.parse(localStorage.getItem(cardsToReviewStorageKey) ?? "[]") as string[];
+let currentCard = JSON.parse(localStorage.getItem(currentCardStorageKey) ?? "null") as string | null;
 
-export function startReview(cards: Card[]) {
-    cardsToReview = cards.slice(1);
-    currentCard = cards[0];
+export function startReview(cardIds: string[]) {
+    cardsToReview = cardIds.slice(1);
+    currentCard = cardIds[0];
+    save();
 }
 
 export function getCurrentCard() {
@@ -25,13 +30,14 @@ export function isDone() {
 export function giveFeedback(feedback: Feedback) {
     const currentCard = getCurrentCard();
 
-    review(currentCard.id, feedback);
+    review(currentCard, feedback);
 
     if (feedback < 3) {
         cardsToReview.push(currentCard);
     }
 
     nextCard();
+    save();
 }
 
 export function onUpdate(callback: Function) {
@@ -39,11 +45,16 @@ export function onUpdate(callback: Function) {
 }
 
 function nextCard() {
-    currentCard = cardsToReview.shift();
+    currentCard = cardsToReview.shift() ?? null;
 
     setTimeout(function () {
         callbacks.forEach(function (callback) {
             callback();
         });
     });
+}
+
+function save() {
+    localStorage.setItem(cardsToReviewStorageKey, JSON.stringify(cardsToReview));
+    localStorage.setItem(currentCardStorageKey, JSON.stringify(currentCard));
 }

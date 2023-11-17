@@ -16,23 +16,30 @@
         <ul id="deckList" class="deck-list"></ul>
     </main>
 
-    <script type="module" src="dist/initCards.js"></script>
+    <!-- <script type="module" src="dist/initCards.js"></script> -->
     <script type="module">
-        import { getAll, countCardsDue } from "./dist/decks.model.js";
+        import { getAll, countCardsDue, getCardsDue } from "./dist/decks.model.js";
+        import { startReview } from "./dist/review.model.js";
 
-        deckList.innerHTML = getAll().map(
-            function (deck) {
-                const cardsDue = countCardsDue(deck.id);
+        const decks = getAll().map(function (deck) {
+            const cardsDue = countCardsDue(deck.id);
+            const deckElement = document.createElement("li");
 
-                return `<li class="deck">
-                    <h2>${deck.name}</h2>
-                    ${cardsDue === 0 ?
-                    "<p>All caught up!</p>" :
-                    `<p>Cards due: ${cardsDue}</p>
-                    <a href="review.html">Review</a>`}
-                </li>`;
-            }
-        ).join("\n");
+            deckElement.classList.add("deck");
+            deckElement.innerHTML = `<h2>${deck.name}</h2>
+                ${cardsDue === 0 ?
+                "<p>All caught up!</p>" :
+                `<p>Cards due: ${cardsDue}</p>
+                <a href="review.html" onclick="startReview(getCardsDue(${deck.id}))">Review</a>`}`;
+
+            deckElement.querySelector("a")?.addEventListener("click", function () {
+                startReview(getCardsDue(deck.id));
+            });
+
+            return deckElement;
+        })
+
+        deckList.append(...decks);
     </script>
 </body>
 
