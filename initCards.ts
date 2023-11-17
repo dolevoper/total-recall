@@ -1,6 +1,7 @@
 import { upsertCard } from "./cards.model.js";
+import { upsertDeck } from "./decks.model.js";
 
-[
+const cards = [
     {
         id: crypto.randomUUID(),
         front: "Father",
@@ -49,4 +50,21 @@ import { upsertCard } from "./cards.model.js";
         interval: 1,
         ef: 2.5
     }
-].forEach(upsertCard);
+];
+
+cards.forEach(upsertCard);
+upsertDeck({
+    id: crypto.randomUUID(),
+    name: "English Vocab",
+    cardIds: cards.map((card) => card.id)
+});
+// upsertDeck({
+//     id: crypto.randomUUID(),
+//     name: "English Vocab",
+//     cardIds: []
+// });
+// upsertDeck({
+//     id: crypto.randomUUID(),
+//     name: "English Vocab",
+//     cardIds: []
+// });

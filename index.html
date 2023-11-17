@@ -7,13 +7,33 @@
     <title>Total Recall</title>
     <link rel="stylesheet" href="dist/reset.css" />
     <link rel="stylesheet" href="dist/styles.css" />
+    <link rel="stylesheet" href="dist/index.css">
 </head>
 
 <body>
     <main>
         <h1>Total Recall</h1>
-        <a href="review.html">Review</a>
+        <ul id="deckList" class="deck-list"></ul>
     </main>
+
+    <script type="module" src="dist/initCards.js"></script>
+    <script type="module">
+        import { getAll, countCardsDue } from "./dist/decks.model.js";
+
+        deckList.innerHTML = getAll().map(
+            function (deck) {
+                const cardsDue = countCardsDue(deck.id);
+
+                return `<li class="deck">
+                    <h2>${deck.name}</h2>
+                    ${cardsDue === 0 ?
+                    "<p>All caught up!</p>" :
+                    `<p>Cards due: ${cardsDue}</p>
+                    <a href="review.html">Review</a>`}
+                </li>`;
+            }
+        ).join("\n");
+    </script>
 </body>
 
 </html>

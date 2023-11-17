@@ -1,0 +1,23 @@
+.deck-list {
+    list-style: none;
+    padding: 0;
+}
+
+.deck {
+    border: 1px solid black;
+    padding: 1rem;
+
+    &:not(:first-child) {
+        border-top: 0;
+    }
+
+    &:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    &:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+}

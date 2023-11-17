@@ -1,5 +1,5 @@
-import { getAll } from "./cards.model.js";
-import { getCurrentCard, giveFeedback, isDone, onUpdate, parseFeedback, startReview } from "./review.model.js";
+import { getAll, parseFeedback } from "./cards.model.js";
+import { getCurrentCard, giveFeedback, isDone, onUpdate, startReview } from "./review.model.js";
 import { showFeedback, flipCard, renderCard, renderDone, hideFeedback } from "./review.view.js";
 
 export function init(reviewZone: HTMLElement, cardElement: HTMLElement, feedbackForm: HTMLFormElement) {
