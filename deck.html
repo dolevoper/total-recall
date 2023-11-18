@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Recall</title>
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/styles.css" />
+    <link rel="stylesheet" href="dist/deck.css" />
+</head>
+
+<body>
+    <main>
+        <h1>Total Recall</h1>
+        <a href="index.html">🏡Home</a>
+        <h2>New Deck</h2>
+        <form name="deckForm" class="deck-form">
+            <div class="form-control">
+                <label for="deckName">Name</label>
+                <input id="deckName" name="deckName" required />
+            </div>
+            <h3>Cards</h3>
+            <button id="btnAddCard" type="button">➕Add card</button>
+            <ol class="card-list"></ol>
+            <button type="submit">Save</button>
+        </form>
+    </main>
+
+    <script type="module">
+        import { upsertDeck } from "./dist/decks.model.js";
+
+        btnAddCard.addEventListener("click", function (e) {});
+
+        document.forms.namedItem("deckForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+
+            upsertDeck({
+                id: crypto.randomUUID(),
+                name: formData.get("deckName"),
+                cardIds: []
+            });
+
+            window.location.replace("index.html");
+        });
+    </script>
+</body>
+
+</html>
