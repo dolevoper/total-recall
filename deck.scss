@@ -15,4 +15,11 @@ html, body, main {
     flex: 1;
 
     overflow: auto;
+    list-style: none;
+    padding: 0;
+
+    &__item {
+        display: grid;
+        grid-auto-flow: column;
+    }
 }
