@@ -28,79 +28,20 @@
     </main>
 
     <script type="module">
-        import { upsertDeck } from "./dist/decks.model.js";
-        import { upsertCard } from "./dist/cards.model.js";
-
-        btnAddCard.addEventListener("click", function (e) {});
+        import { saveDeck, addCard } from "./dist/deck.controller.js";
 
         document.forms.namedItem("deckForm").addEventListener("submit", function (e) {
             e.preventDefault();
 
             const formData = new FormData(e.target);
-            const name = formData.get("deckName");
-            const cards = formData.getAll("cards").map((card) => JSON.parse(card));
 
-            cards.forEach(upsertCard);
-
-            upsertDeck({
-                id: crypto.randomUUID(),
-                name,
-                cardIds: cards.map((card) => card.id)
-            });
+            saveDeck(formData);
 
             window.location.replace("index.html");
         });
 
         btnAddCard.addEventListener("click", function (e) {
-            const li = document.createElement("li");
-            li.classList.add("card-list__item");
-
-            const card = {
-                id: crypto.randomUUID(),
-                front: "",
-                back: "",
-                repetitions: 0,
-                interval: 0,
-                ef: 2.5
-            };
-
-            const cardInput = document.createElement("input");
-            cardInput.type = "hidden";
-            cardInput.name = "cards";
-            cardInput.value = JSON.stringify(card);
-
-            const frontTextarea = document.createElement("textarea");
-            frontTextarea.id = `card-${card.id}-front`;
-            frontTextarea.rows = 5;
-            frontTextarea.addEventListener("input", function (e) {
-                card.front = e.currentTarget.value;
-                cardInput.value = JSON.stringify(card);
-            });
-            const frontLabel = document.createElement("label");
-            frontLabel.htmlFor = frontTextarea.id;
-            frontLabel.textContent = "Front";
-            const frontContainer = document.createElement("div");
-            frontContainer.classList.add("form-control");
-            frontContainer.append(frontLabel, frontTextarea);
-            
-            const backTextarea = document.createElement("textarea");
-            backTextarea.id = `card-${card.id}-back`;
-            backTextarea.rows = 5;
-            backTextarea.addEventListener("input", function (e) {
-                card.back = e.currentTarget.value;
-                cardInput.value = JSON.stringify(card);
-            });
-            const backLabel = document.createElement("label");
-            backLabel.htmlFor = backTextarea.id;
-            backLabel.textContent = "Back";
-            const backContainer = document.createElement("div");
-            backContainer.classList.add("form-control");
-            backContainer.append(backLabel, backTextarea);
-            
-            li.append(cardInput, frontContainer, backContainer);
-            cardList.append(li);
-
-            frontTextarea.focus();
+            addCard(cardList);
         });
     </script>
 </body>
