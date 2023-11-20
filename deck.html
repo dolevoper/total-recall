@@ -16,9 +16,10 @@
         <a href="index.html">🏡Home</a>
         <h2>New Deck</h2>
         <form name="deckForm" class="deck-form">
+            <input type="hidden" name="deckId" />
             <div class="form-control">
                 <label for="deckName">Name</label>
-                <input id="deckName" name="deckName" required />
+                <input id="deckName" name="deckName" required autofocus />
             </div>
             <h3>Cards</h3>
             <button id="btnAddCard" type="button">➕Add card</button>
@@ -28,7 +29,11 @@
     </main>
 
     <script type="module">
-        import { saveDeck, addCard } from "./dist/deck.controller.js";
+        import { init, saveDeck, addCard } from "./dist/deck.controller.js";
+
+        const searchParams = new URLSearchParams(window.location.search);
+
+        init(document.forms.namedItem("deckForm"), cardList, searchParams.get("id"));
 
         document.forms.namedItem("deckForm").addEventListener("submit", function (e) {
             e.preventDefault();

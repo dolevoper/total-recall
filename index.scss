@@ -20,4 +20,15 @@
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
     }
+
+    &__actions {
+        display: flex;
+        gap: 1rem;
+        align-items: baseline;
+        padding: 0;
+
+        &__group-start {
+            margin-inline-start: auto;
+        }
+    }
 }

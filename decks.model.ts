@@ -3,7 +3,7 @@ import { appUUID } from "./consts.js";
 
 const decksStorageKey = `${appUUID}_totalrecall_decks`;
 
-type Deck = {
+export type Deck = {
     id: string,
     name: string,
     cardIds: string[]

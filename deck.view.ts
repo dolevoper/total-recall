@@ -1,6 +1,12 @@
 import { Card } from "./cards.model.js";
+import { Deck } from "./decks.model.js";
 
-export function renderCard(cardList: HTMLElement, card: Card, onFrontUpdate: (value: string) => void, onBackUpdate: (value: string) => void) {
+export function updateDeck(deckForm: HTMLFormElement, deck: Deck) {
+    (deckForm.elements.namedItem("deckId") as HTMLInputElement).value = deck.id;
+    (deckForm.elements.namedItem("deckName") as HTMLInputElement).value = deck.name;
+}
+
+export function renderCard(cardList: HTMLElement, card: Card, onFrontUpdate: (value: string) => void, onBackUpdate: (value: string) => void, focus = true) {
     const li = document.createElement("li");
     li.classList.add("card-list__item");
 
@@ -13,6 +19,7 @@ export function renderCard(cardList: HTMLElement, card: Card, onFrontUpdate: (va
     const frontTextarea = document.createElement("textarea");
     frontTextarea.id = `card-${card.id}-front`;
     frontTextarea.rows = 5;
+    frontTextarea.value = card.front;
     frontTextarea.addEventListener("input", function (e: InputEvent) {
         onFrontUpdate((e.currentTarget as HTMLTextAreaElement).value);
     });
@@ -26,6 +33,7 @@ export function renderCard(cardList: HTMLElement, card: Card, onFrontUpdate: (va
     const backTextarea = document.createElement("textarea");
     backTextarea.id = `card-${card.id}-back`;
     backTextarea.rows = 5;
+    backTextarea.value = card.back;
     backTextarea.addEventListener("input", function (e: InputEvent) {
         onBackUpdate((e.currentTarget as HTMLTextAreaElement).value);
     });
@@ -39,7 +47,7 @@ export function renderCard(cardList: HTMLElement, card: Card, onFrontUpdate: (va
     li.append(cardInput, frontContainer, backContainer);
     cardList.append(li);
 
-    frontTextarea.focus();
+    focus && frontTextarea.focus();
 }
 
 export function updateCard(card: Card) {
