@@ -1,0 +1,54 @@
+html, body, main, .review-zone {
+  height: 100%;
+}
+
+.review-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.review-zone__feedback {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+}
+.review-zone__feedback__button {
+  aspect-ratio: 1;
+}
+
+.card {
+  flex: 1;
+  align-self: center;
+  color: white;
+  font-weight: 600;
+  font-size: 2rem;
+  aspect-ratio: 3/4;
+  perspective: 1000px;
+  display: grid;
+}
+.card__back, .card__front {
+  grid-row: 1;
+  grid-column: 1;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  transition: transform 1s ease-in-out;
+}
+.card__front {
+  background: deeppink;
+}
+.card__back {
+  background: lightseagreen;
+  transform: rotateY(180deg);
+}
+.card--flipped .card__back {
+  transform: none;
+}
+.card--flipped .card__front {
+  transform: rotateY(180deg);
+}
+
+.invisible {
+  visibility: hidden;
+}
